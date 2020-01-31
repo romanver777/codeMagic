@@ -1,0 +1,24 @@
+{
+  "name": "codeMagic",
+  "version": "1.0.0",
+  "description": "проект «Код и Магия»",
+  "main": "index.html",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.20.0",
+    "parcel-bundler": "^1.12.4"
+  },
+  "scripts": {
+    "test": "eslint js/main.js",
+    "fix": "eslint js/main.js --fix",
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "11.9.0"
+  }
+}
