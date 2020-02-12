@@ -1,15 +1,17 @@
+(function() {
 
-const fireballSize = 22;
-const wizardSpeed = 3;
-const wizardWidth = 70;
+    window.fireballSize = 22;
+    window.wizardSpeed = 3;
+    window.wizardWidth = 70;
 
-const getWizardHeight = (wizardWidth) => 1.337 * wizardWidth;
-const getfireballSpeed = (left) => (left ? 5 : 2);
+    window.getWizardHeight = (wizardWidth) => 1.337 * wizardWidth;
+    window.getfireballSpeed = (left) => (left ? 5 : 2);
 
-function getWizardX(width) {
-  return width / 2 - wizardWidth / 2;
-}
+    window.getWizardX = (width) => {
+        return width / 2 - wizardWidth / 2;
+    };
 
-function getWizardY(height) {
-  return (height - getWizardHeight(wizardWidth)) * (2 / 3);
-}
+    window.getWizardY = (height) => {
+        return (height - getWizardHeight(wizardWidth)) * (2 / 3);
+    };
+})();
