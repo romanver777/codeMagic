@@ -97,8 +97,47 @@ setupFireballWrap.addEventListener('click', () => {
 });
 
 
+// перетаскивание окна персонажа
+let setupUserPic = setupEl.querySelector('.setup-user-pic');
 
+setupUserPic.addEventListener('mousedown', (event) => {
+
+    event.preventDefault();
+
+    let startCoords = {
+        x: event.clientX,
+        y: event.clientY
+    };
+
+    let onMouseMove = (moveEvent) => {
+
+        moveEvent.preventDefault();
+
+        let shift = {
+            x: startCoords.x - moveEvent.clientX,
+            y: startCoords.y - moveEvent.clientY
+        };
+
+        startCoords = {
+            x: moveEvent.clientX,
+            y: moveEvent.clientY
+        };
+
+        setupEl.style.left = `${setupEl.offsetLeft - shift.x}px`;
+        setupEl.style.top = `${setupEl.offsetTop - shift.y}px`;
+    };
+    let onMouseUp = (upEvent) => {
+
+        upEvent.preventDefault();
+
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+});
 
 fillArrayHeroes(getFullName(fNames, sNames), coatColors, eyesColors);
 addSimilarWizards(similarHero);
-
