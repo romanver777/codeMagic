@@ -26,7 +26,7 @@
             indexes.add(Math.floor(Math.random() * Math.floor(array.length)));
         }
 
-        return Array.from(indexes);
+        return [...indexes];
     }
 
 // создание полного имени
@@ -56,30 +56,50 @@
     }
 
 // вывод волшебников в DOM
-    function addSimilarWizards(wizards) {
+    let successHandler = (wizards) => {
+
         const template = document.querySelector('#similar-wizard-template').content.querySelector('div');
         const setupDiv = document.querySelector('.setup-similar-list');
 
-        for (const el of wizards) {
+        let similarWizards = getArrayRandomIndexes(wizards, 4);
+
+        for(let i = 0; i < similarWizards.length; i++) {
+
             const element = template.cloneNode(true);
 
-            element.querySelector('.setup-similar-label').innerText = el.name;
-            element.querySelector('.wizard-coat').setAttribute('fill', el.coatColor);
-            element.querySelector('.wizard-eyes').setAttribute('fill', el.eyesColor);
+            element.querySelector('.setup-similar-label').innerText = wizards[ similarWizards[i] ].name;
+            element.querySelector('.wizard-coat').setAttribute('fill', wizards[ similarWizards[i] ].colorCoat);
+            element.querySelector('.wizard-eyes').setAttribute('fill', wizards[ similarWizards[i] ].colorEyes);
 
             setupDiv.appendChild(element);
         }
 
         document.querySelector('.setup-similar').classList.remove('hidden');
-    }
 
-// открытие-закрытие окна настройки персонажа
-    setupOpen.addEventListener('click', () => setupEl.classList.remove('hidden'));
-    setupClose.addEventListener('click', () => {
+        const form = setupEl.querySelector('.setup-wizard-form');
+
+        form.addEventListener('submit', (e) => {
+
+            window.save(new FormData(form), hideAndClearSetupElPosition, errorHandler);
+            e.preventDefault();
+        });
+    };
+
+// вывод ошибки при загрузке данных
+    let errorHandler = (message) => {
+        alert(message);
+    };
+
+// закрытие окна и возврат в начальное положение
+    let hideAndClearSetupElPosition = () => {
 
         setupEl.classList.add('hidden');
         setupEl.style = '';
-    });
+    };
+
+// открытие-закрытие окна настройки персонажа
+    setupOpen.addEventListener('click', () => setupEl.classList.remove('hidden'));
+    setupClose.addEventListener('click', () => hideAndClearSetupElPosition() );
 
 // замена цвета мантии при клике
     const setupWizardCoat = document.querySelector('.setup-wizard .wizard-coat');
@@ -105,7 +125,5 @@
         setupFireballWrap.setAttribute('style', `background: ${fireballColors[getRandomNumber(0, fireballColors.length)]}`);
     });
 
-    fillArrayHeroes(getFullName(fNames, sNames), coatColors, eyesColors);
-    addSimilarWizards(similarHero);
-
+    window.load(successHandler, errorHandler);
 })();
