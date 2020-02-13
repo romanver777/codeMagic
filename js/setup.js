@@ -99,7 +99,7 @@
 
 // открытие-закрытие окна настройки персонажа
     setupOpen.addEventListener('click', () => setupEl.classList.remove('hidden'));
-    setupClose.addEventListener('click', () => hideAndClearSetupElPosition );
+    setupClose.addEventListener('click', () => hideAndClearSetupElPosition() );
 
 // замена цвета мантии при клике
     const setupWizardCoat = document.querySelector('.setup-wizard .wizard-coat');
